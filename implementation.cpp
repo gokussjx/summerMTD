@@ -11,6 +11,14 @@ double rootMeanSquare(double a, double b, double c) {
   return sqrt(rms);
 }
 
+double randomize() {
+  // **Uniform real distribution random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(0, 1.00001);
+    return dis(gen);
+}
+
 int main() {
 
 
@@ -48,12 +56,9 @@ int main() {
 
     // BEGIN: Utility calculation
     // **Uniform real distribution random number generator
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0, 1.00001);
-    double r_reputation_j = dis(gen);
+    double r_reputation_j = randomize();
     
-    if (r_reputation_j == 0) r_reputation_j = dis(gen);
+    if (r_reputation_j == 0) r_reputation_j = randomize();
     if (r_reputation_j > 1) r_reputation_j = 1;
     // **
     
