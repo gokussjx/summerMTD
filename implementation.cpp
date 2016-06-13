@@ -8,7 +8,7 @@
 double rootMeanSquare(double a, double b, double c) {
   double rms = pow(a, 2.0) + pow(b, 2.0) + pow(c, 2.0);
   rms = rms / 3.0;
-  return rms;
+  return sqrt(rms);
 }
 
 int main() {
@@ -44,6 +44,7 @@ int main() {
     double maxTempMCPossible = 2.0;
     double tempMC = SC_snapshotCost_i + NC_networkCost_ij;
     double MC_migrationCost_ij = (tempMC - minTempMCPossible) / (maxTempMCPossible - minTempMCPossible);
+    // END: Migration Cost calculation
 
     // BEGIN: Utility calculation
     // **Uniform real distribution random number generator
