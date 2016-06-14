@@ -30,19 +30,21 @@ double randomize(double a, double b) {
 
     return dis(gen);
 }
-double assignment(double avail_j, double rmax_k)
-{
-	double rmin_k = randomize(0, 0.5);
-	//double rmax_k = randomize(0.5, 1);
+
+double assignRalloc_k(double Ravail_j, double Rmax_k) {
+	double Rmin_k = randomize(0, 0.5);
+	//double Rmax_k = randomize(0.5, 1);
 	double p_k = randomize(0, 1.0);
-	if (avail_j < rmin_k)
-		R_k_j = 0;
-	else if (p_k * rmax_k < rmin_k)
-		R_k_j = rmin_k;
+  double Ralloc_k_j = 0;
+	if (Ravail_j < Rmin_k)
+		Ralloc_k_j = 0;
+	else if (p_k * Rmax_k < Rmin_k)
+		Ralloc_k_j = Rmin_k;
 	else
-		R_k_j = p_k * rmax_k;
-	return R_k_j;
+		Ralloc_k_j = p_k * Rmax_k;
+	return Ralloc_k_j;
 }
+
 int main() {
 
   std::vector<int> vmArray{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};    // Holds the ID of every VM
@@ -56,9 +58,9 @@ int main() {
   double B_bid = std::numeric_limits<double>::min();
 
   //Compute Ralloc value for the application k. We only need one application
-  double C_compute_k = randomize(0, 0.5); // 1 - 0.65 {i.e, 65% CPU is being used}
-  double N_network_k = randomize(0, 0.5); // 1 - 0.50 {i.e, 50% bandwidth being used}
-  double Ralloc_k = rootMeanSquare(C_compute_k, N_network_k);
+  // double C_compute_k = randomize(0, 0.5); // 1 - 0.65 {i.e, 65% CPU is being used}
+  // double N_network_k = randomize(0, 0.5); // 1 - 0.50 {i.e, 50% bandwidth being used}
+  // double Ralloc_k = rootMeanSquare(C_compute_k, N_network_k);
 
   //Compute Rmax value for the application k. We only need one application
   double C_max_k = randomize(0.5, 1);
@@ -73,7 +75,7 @@ int main() {
     double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j, N_network_j);
     double Rmax_j = 1;
-    double DC_deploymentCost_j = R_j / Rmax_j;
+    double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
     
     // BEGIN: Migration Cost calculation
@@ -87,15 +89,13 @@ int main() {
 
     // BEGIN: Utility calculation
     double r_reputation_j = randomize(0, 1);
-	double Ralloc_k = assignment(Ravail_j, Rmax_k);
-	double U_utility_j = r_reputation_j * (Ralloc_k / Rmax_k);
+  	double Ralloc_k_j = assignRalloc_k(Ravail_j, Rmax_k);
+  	double U_utility_j = r_reputation_j * (Ralloc_k_j / Rmax_k);
     // END: Utility calculation
 
     // BEGIN: Bid calculation
-    bidArray[j] = U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j;
+    bidArray.push_back(U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j);
     // END: Bid calculation
-    
-
   }
 
   // BEGIN: Bid selection
@@ -110,8 +110,8 @@ int main() {
   std::cout << std::endl;
   std::cout << "********" << std::endl;
   std::cout << "Extra stats: " << std::endl;
-  std::cout << "Ralloc_k(C, N) = " << Ralloc_k;
-  std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
+  // std::cout << "Ralloc_k_j = " << Ralloc_k_j << std::endl;
+  // std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
   std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
   std::cout << "(" << C_max_k << ", " << N_max_k << ")" << std::endl;
 }
