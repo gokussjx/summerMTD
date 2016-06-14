@@ -30,10 +30,10 @@ double randomize(double a, double b) {
 
     return dis(gen);
 }
-double assignment(double avail_j)
+double assignment(double avail_j, double rmax_k)
 {
 	double rmin_k = randomize(0, 0.5);
-	double rmax_k = randomize(0.5, 1);
+	//double rmax_k = randomize(0.5, 1);
 	double p_k = randomize(0, 1.0);
 	if (avail_j < rmin_k)
 		R_k_j = 0;
@@ -87,7 +87,7 @@ int main() {
 
     // BEGIN: Utility calculation
     double r_reputation_j = randomize(0, 1);
-	double Ralloc_k = assignment(Ravail_j);
+	double Ralloc_k = assignment(Ravail_j, Rmax_k);
 	double U_utility_j = r_reputation_j * (Ralloc_k / Rmax_k);
     // END: Utility calculation
 
