@@ -94,6 +94,7 @@ int main() {
     // BEGIN: Bid calculation
     bidArray[j] = U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j;
     // END: Bid calculation
+    
 
   }
 
@@ -106,4 +107,11 @@ int main() {
 
   // Print the best VM's ID and Bid value
   std::cout << "The best VM is VM#" << vmArray[bestIndex] << " with Bid value = " << B_bid << std::endl;
+  std::cout << std::endl;
+  std::cout << "********" << std::endl;
+  std::cout << "Extra stats: " << std::endl;
+  std::cout << "Ralloc_k(C, N) = " << Ralloc_k;
+  std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
+  std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
+  std::cout << "(" << C_max_k << ", " << N_max_k << ")" << std::endl;
 }
