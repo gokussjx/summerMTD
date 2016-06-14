@@ -19,7 +19,7 @@ double randomize(double a, double b) {
     std::uniform_real_distribution<> dis(a, b + 0.00001);
 
     auto temp = dis(gen);
-    if (temp == 0) temp = randomize();  // We're forcing it to never be 0
+    if (temp == 0) temp = randomize(a, b);  // We're forcing it to never be 0
     if (temp > b) temp = b;
 
     return dis(gen);
