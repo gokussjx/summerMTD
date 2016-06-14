@@ -61,7 +61,7 @@ int main() {
     double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j, N_network_j);
     double Rmax_j = 1;
-    double DC_deploymentCost_j = R_j / Rmax_j;
+    double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
     
     // BEGIN: Migration Cost calculation
