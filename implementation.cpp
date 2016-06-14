@@ -39,16 +39,15 @@ int main() {
   // SC_snapshotCost_i = timeAtIdeal / timeAtSource;
   double SC_snapshotCost_i = randomize(0, 1);
   
-  double Rmax, Ralloc, U_utility;
   std::vector<double> bidArray;
   double B_bid = std::numeric_limits<double>::min();
 
-  //Compute Ralloc value for the application k. We only need one application
+  //Compute Ralloc value for the application k.
   double C_compute_k = randomize(0, 0.5); // 1 - 0.65 {i.e, 65% CPU is being used}
   double N_network_k = randomize(0, 0.5); // 1 - 0.50 {i.e, 50% bandwidth being used}
   double Ralloc_k = rootMeanSquare(C_compute_k, N_network_k);
 
-  //Compute Rmax value for the application k. We only need one application
+  //Compute Rmax value for the application k.
   double C_max_k = randomize(0.5, 1);
   double N_max_k = randomize(0.5, 1);
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
@@ -56,7 +55,7 @@ int main() {
   for (int j = 0; j < vmArray.size(); ++j) {
     
     // BEGIN: Deployment Cost calculation
-    //Compute R value for the application k. We only need one application
+    //Compute R value for the application k.
     double C_compute_j = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
     double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j, N_network_j);
@@ -81,7 +80,6 @@ int main() {
     // BEGIN: Bid calculation
     bidArray.push_back(U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j);
     // END: Bid calculation
-
   }
 
   // BEGIN: Bid selection
@@ -93,4 +91,12 @@ int main() {
 
   // Print the best VM's ID and Bid value
   std::cout << "The best VM is VM#" << vmArray[bestIndex] << " with Bid value = " << B_bid << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "********" << std::endl;
+  std::cout << "Extra stats: " << std::endl;
+  std::cout << "Ralloc_k(C, N) = " << Ralloc_k;
+  std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
+  std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
+  std::cout << "(" << C_max_k << ", " << N_max_k << ")" << std::endl;
 }
