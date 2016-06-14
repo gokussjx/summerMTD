@@ -79,7 +79,7 @@ int main() {
     // END: Utility calculation
 
     // BEGIN: Bid calculation
-    bidArray[j] = U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j;
+    bidArray.push_back(U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j);
     // END: Bid calculation
 
   }
