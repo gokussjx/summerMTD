@@ -5,10 +5,12 @@
 #include <limits>
 #include <random>
 
+bool first = true;
+
 // Returns RMS value
-double rootMeanSquare(double a, double b, double c) {
-  double rms = pow(a, 2.0) + pow(b, 2.0) + pow(c, 2.0);
-  rms = rms / 3.0;
+double rootMeanSquare(double a, double b) {
+  double rms = pow(a, 2.0) + pow(b, 2.0);
+  rms = rms / 2.0;
   return sqrt(rms);
 }
 
@@ -19,7 +21,11 @@ double randomize(double a, double b) {
     std::uniform_real_distribution<> dis(a, b + 0.00001);
 
     auto temp = dis(gen);
-    if (temp == 0) temp = randomize(a, b);  // We're forcing it to never be 0
+    if (first == true) {
+      first = false;
+      if (temp == a) temp = randomize(a, b);  // We're reducing probability of 'a'
+      first = true;
+    }
     if (temp > b) temp = b;
 
     return dis(gen);
@@ -37,19 +43,25 @@ int main() {
   std::vector<double> bidArray;
   double B_bid = std::numeric_limits<double>::min();
 
-  //Compute R value for the application k. We only need one application
-  double C_compute_j = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
-  double S_storage_j = randomize(0, 1); // 1 - 0.70 {i.e, 70% storage is being used}
-  double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
-  double R_j = rootMeanSquare(C_compute_j, S_storage_j, N_network_j);
+  //Compute Ralloc value for the application k. We only need one application
+  double C_compute_k = randomize(0, 0.5); // 1 - 0.65 {i.e, 65% CPU is being used}
+  double N_network_k = randomize(0, 0.5); // 1 - 0.50 {i.e, 50% bandwidth being used}
+  double Ralloc_k = rootMeanSquare(C_compute_k, N_network_k);
+
+  //Compute Rmax value for the application k. We only need one application
+  double C_max_k = randomize(0.5, 1);
+  double N_max_k = randomize(0.5, 1);
+  double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
   
   for (int j = 0; j < vmArray.size(); ++j) {
     
     // BEGIN: Deployment Cost calculation
-  	double Rmax = rand(0.5, 1);
-  	//double R_max_j = rand(0.5, 1);
-  	//double R_min_j = rand(0, 0.5);
-  	double DC_deploymentCost_j = R_j / Rmax;
+    //Compute R value for the application k. We only need one application
+    double C_compute_j = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
+    double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
+    double Ravail_j = rootMeanSquare(C_compute_j, N_network_j);
+    double Rmax_j = 1;
+    double DC_deploymentCost_j = R_j / Rmax_j;
     // END: Deployment Cost calculation
     
     // BEGIN: Migration Cost calculation
@@ -63,13 +75,7 @@ int main() {
 
     // BEGIN: Utility calculation
     double r_reputation_j = randomize(0, 1);
-    
-    // if (r_reputation_j == 0) r_reputation_j = randomize();
-    // if (r_reputation_j > 1) r_reputation_j = 1;
-    
-    double Ralloc = ?;
-    //double Rmax = rand(0.5, 1);
-    double U_utility_j = r_reputation_j * (Ralloc / Rmax);
+    double U_utility_j = r_reputation_j * (Ralloc_k / Rmax_k);
     // END: Utility calculation
 
     // BEGIN: Bid calculation
