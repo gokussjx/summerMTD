@@ -13,14 +13,14 @@ double rootMeanSquare(double a, double b, double c) {
 }
 
 // Uniform real distribution random number generator
-double randomize() {
+double randomize(double a, double b) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0, 1.00001);
+    std::uniform_real_distribution<> dis(a, b + 0.00001);
 
     auto temp = dis(gen);
     if (temp == 0) temp = randomize();  // We're forcing it to never be 0
-    if (temp > 1) temp = 1;
+    if (temp > b) temp = b;
 
     return dis(gen);
 }
@@ -50,15 +50,14 @@ int main() {
   for (int j = 0; j < vmArray.size(); ++j) {
     
     // TODO: Implement DC_deploymentCost
-    // RMS value for "vector" R_k
-	double Rmax = rand(0.5, 1);
+  	double Rmax = rand(0.5, 1);
     double C_compute_j = randomize(); // 1 - 0.65 {i.e, 65% CPU is being used}
     double S_storage_j = randomize(); // 1 - 0.70 {i.e, 70% storage is being used}
     double N_network_j = randomize(); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double R_j = rootMeanSquare(C_compute_j, S_storage_j, N_network_j);
-	//double R_max_j = rand(0.5, 1);
-	//double R_min_j = rand(0, 0.5);
-	double DC_deploymentCost_j = R_j / Rmax;
+  	//double R_max_j = rand(0.5, 1);
+  	//double R_min_j = rand(0, 0.5);
+  	double DC_deploymentCost_j = R_j / Rmax;
     
     // BEGIN: Migration Cost calculation
     // double NC_networkCost_ij = timeMigrateAtMaxBW / timeMigrateAtActualBW;
@@ -76,7 +75,7 @@ int main() {
     // if (r_reputation_j > 1) r_reputation_j = 1;
     
     double Ralloc = ?;
-	//double Rmax = rand(0.5, 1);
+    //double Rmax = rand(0.5, 1);
     double U_utility_j = r_reputation_j * (Ralloc / Rmax);
     // END: Utility calculation
 
