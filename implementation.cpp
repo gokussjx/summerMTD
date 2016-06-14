@@ -30,38 +30,31 @@ int main() {
   std::vector<int> vmArray{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};    // Holds the ID of every VM
   int bestIndex;                                              // Index of best VM in vmArray
 
-  // double DC_deploymentCost;
-  
-  // double timeAtSource = ?;
-  // double timeAtIdeal = ?; 
-  // double SC_snapshotCost_i = timeAtIdeal / timeAtSource;
-  double SC_snapshotCost_i = randomize();
+  // SC_snapshotCost_i = timeAtIdeal / timeAtSource;
+  double SC_snapshotCost_i = randomize(0, 1);
   
   double Rmax, Ralloc, U_utility;
   std::vector<double> bidArray;
   double B_bid = std::numeric_limits<double>::min();
-  //Compute R value for the application k. [we only need one application.... with its respective values randomized
-  double C_compute_k = randomize();
-  double S_storage_k = randomize(); 
-  double N_network_k = randomize();
-  double R_k = rootMeanSquare(C_compute_k, S_storage_k, N_network_k);
-  //
+
+  //Compute R value for the application k. We only need one application
+  double C_compute_j = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
+  double S_storage_j = randomize(0, 1); // 1 - 0.70 {i.e, 70% storage is being used}
+  double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
+  double R_j = rootMeanSquare(C_compute_j, S_storage_j, N_network_j);
   
   for (int j = 0; j < vmArray.size(); ++j) {
     
-    // TODO: Implement DC_deploymentCost
+    // BEGIN: Deployment Cost calculation
   	double Rmax = rand(0.5, 1);
-    double C_compute_j = randomize(); // 1 - 0.65 {i.e, 65% CPU is being used}
-    double S_storage_j = randomize(); // 1 - 0.70 {i.e, 70% storage is being used}
-    double N_network_j = randomize(); // 1 - 0.50 {i.e, 50% bandwidth being used}
-    double R_j = rootMeanSquare(C_compute_j, S_storage_j, N_network_j);
   	//double R_max_j = rand(0.5, 1);
   	//double R_min_j = rand(0, 0.5);
   	double DC_deploymentCost_j = R_j / Rmax;
+    // END: Deployment Cost calculation
     
     // BEGIN: Migration Cost calculation
     // double NC_networkCost_ij = timeMigrateAtMaxBW / timeMigrateAtActualBW;
-    double NC_networkCost_ij = randomize();
+    double NC_networkCost_ij = randomize(0, 1);
     double minTempMCPossible = 0.0;
     double maxTempMCPossible = 2.0;
     double tempMC = SC_snapshotCost_i + NC_networkCost_ij;
@@ -69,7 +62,7 @@ int main() {
     // END: Migration Cost calculation
 
     // BEGIN: Utility calculation
-    double r_reputation_j = randomize();
+    double r_reputation_j = randomize(0, 1);
     
     // if (r_reputation_j == 0) r_reputation_j = randomize();
     // if (r_reputation_j > 1) r_reputation_j = 1;
