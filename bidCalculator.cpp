@@ -32,17 +32,17 @@ double randomize(double a, double b) {
 }
 
 double assignRalloc_k(double Ravail_j, double Rmax_k) {
-	double Rmin_k = randomize(0, 0.5);
-	//double Rmax_k = randomize(0.5, 1);
-	double p_k = randomize(0, 1.0);
+  double Rmin_k = randomize(0, 0.5);
+  //double Rmax_k = randomize(0.5, 1);
+  double p_k = randomize(0, 1.0);
   double Ralloc_k_j = 0;
-	if (Ravail_j < Rmin_k)
-		Ralloc_k_j = 0;
-	else if (p_k * Rmax_k < Rmin_k)
-		Ralloc_k_j = Rmin_k;
-	else
-		Ralloc_k_j = p_k * Rmax_k;
-	return Ralloc_k_j;
+  if (Ravail_j < Rmin_k)
+    Ralloc_k_j = 0;
+  else if (p_k * Rmax_k < Rmin_k)
+    Ralloc_k_j = Rmin_k;
+  else
+    Ralloc_k_j = p_k * Rmax_k;
+  return Ralloc_k_j;
 }
 
 int main() {
@@ -53,7 +53,6 @@ int main() {
   // SC_snapshotCost_i = timeAtIdeal / timeAtSource;
   double SC_snapshotCost_i = randomize(0, 1);
   
-  double Rmax, Ralloc, U_utility;
   std::vector<double> bidArray;
   double B_bid = std::numeric_limits<double>::min();
 
@@ -67,7 +66,7 @@ int main() {
   double N_max_k = randomize(0.5, 1);
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
   
-  for (int j = 0; j < vmArray.size(); ++j) {
+  for (unsigned int j = 0; j < vmArray.size(); ++j) {
     
     // BEGIN: Deployment Cost calculation
     //Compute R value for the application k. We only need one application
@@ -89,8 +88,8 @@ int main() {
 
     // BEGIN: Utility calculation
     double r_reputation_j = randomize(0, 1);
-  	double Ralloc_k_j = assignRalloc_k(Ravail_j, Rmax_k);
-  	double U_utility_j = r_reputation_j * (Ralloc_k_j / Rmax_k);
+    double Ralloc_k_j = assignRalloc_k(Ravail_j, Rmax_k);
+    double U_utility_j = r_reputation_j * (Ralloc_k_j / Rmax_k);
     // END: Utility calculation
 
     // BEGIN: Bid calculation
