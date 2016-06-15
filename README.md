@@ -13,17 +13,18 @@ To build from source, ensure that you meet the following requirements:
 ### Build
 
 1. Compile from source:
-```bash
-$ make all
-```
+  ```
+  $ make all
+  ```
+
 2. Run:
-```bash
-$ make run
-```
+  ```
+  $ make run
+  ```
 
 ### Cleanup
 
 To remove compiled executable:
-```bash
+```
 $ make clean
 ```
