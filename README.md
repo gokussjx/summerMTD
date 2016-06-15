@@ -21,7 +21,7 @@ $ make all
 $ make run
 ```
 
-### Cleanup:
+### Cleanup
 
 To remove compiled executable:
 ```bash
