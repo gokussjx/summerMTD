@@ -65,14 +65,16 @@ int main() {
   double C_max_k = randomize(0.5, 1);
   double N_max_k = randomize(0.5, 1);
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
+  double C_compute_j[10];
+  double N_network_j[10];
   
   for (unsigned int j = 0; j < vmArray.size(); ++j) {
     
     // BEGIN: Deployment Cost calculation
     //Compute R value for the application k. We only need one application
-    double C_compute_j = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
-    double N_network_j = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
-    double Ravail_j = rootMeanSquare(C_compute_j, N_network_j);
+    C_compute_j[j] = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
+    N_network_j[j] = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
+    double Ravail_j = rootMeanSquare(C_compute_j[j], N_network_j[j]);
     double Rmax_j = 1;
     double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
@@ -111,6 +113,8 @@ int main() {
   std::cout << "Extra stats: " << std::endl;
   // std::cout << "Ralloc_k_j = " << Ralloc_k_j << std::endl;
   // std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
+  std::cout << "Ideal VM Computation value: " << C_compute_j[bestIndex] << std::endl;
+  std::cout << "Ideal VM Network value: " << N_network_j[bestIndex] << std::endl;
   std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
   std::cout << "(" << C_max_k << ", " << N_max_k << ")" << std::endl;
 }
