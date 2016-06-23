@@ -41,3 +41,4 @@ min(MC(j) + DC(j))
 % Already done
 
 % MAP for all metrics
+% All the above, and lastly, Utility for all competing schemes
