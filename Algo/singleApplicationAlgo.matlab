@@ -34,8 +34,10 @@ min(MC(j) + DC(j))
 % Greedy approach
 
 %Least vulnerability
-% Choosing VM with best reputation
+% Choosing VM with best reputation (r)
 
 %Random
 % Picking any VM at random
 % Already done
+
+% MAP for all metrics
