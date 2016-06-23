@@ -1,0 +1,81 @@
+./bidCalculator
+The details for VM#0
+Computation: 0.736181
+Network: 0.695875
+Reputation: 0.0775525
+----------------------------------
+The details for VM#1
+Computation: 0.566673
+Network: 0.165433
+Reputation: 0.355234
+----------------------------------
+The details for VM#2
+Computation: 0.544275
+Network: 0.0300646
+Reputation: 0.819412
+----------------------------------
+The details for VM#3
+Computation: 0.573153
+Network: 0.530137
+Reputation: 0.470754
+----------------------------------
+The details for VM#4
+Computation: 0.936551
+Network: 0.837752
+Reputation: 0.43311
+----------------------------------
+The details for VM#5
+Computation: 0.817635
+Network: 0.646906
+Reputation: 0.882308
+----------------------------------
+The details for VM#6
+Computation: 0.259198
+Network: 0.890042
+Reputation: 0.0061315
+----------------------------------
+The details for VM#7
+Computation: 0.415585
+Network: 0.727005
+Reputation: 0.148387
+----------------------------------
+The details for VM#8
+Computation: 0.932299
+Network: 0.593022
+Reputation: 0.181509
+----------------------------------
+The details for VM#9
+Computation: 0.971291
+Network: 0.927191
+Reputation: 0.351328
+----------------------------------
+The calculations as of our algorithm.
+
+The best VM is VM#6 with Bid value = -0.381867
+
+********
+Extra stats: 
+Applicable Computation value of the best VM is 0.817635
+Applicable Network value of the best VM is 0.646906
+Rmax_k(Cmax, Nmax) = 0.676919(0.650109, 0.702707)
+
+
+**************************************************************************
+Greedy approach
+The best VM is VM# 9 with the Resource value of 0.949497
+
+
+the computation value for this VM is: 0.971291.
+the network value for this VM is: 0.927191.
+the reputation for this VM is: 0.351328.
+**************************************************************************
+Based on the reputation
+The best VM is VM# 5 with the Reputation value of 0.882308
+the computation value for this VM is: 0.817635.
+the network value for this VM is: 0.646906.
+the reputation for this VM is: 0.882308.
+**************************************************************************
+The randomly selected VM is VM#9
+the computation value for this VM is: 0.971291.
+the network value for this VM is: 0.927191.
+the reputation for this VM is: 0.351328.
