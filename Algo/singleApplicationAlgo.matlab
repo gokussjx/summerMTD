@@ -42,3 +42,8 @@ min(MC(j) + DC(j))
 
 % MAP for all metrics
 % All the above, and lastly, Utility for all competing schemes
+% Metrics:
+%1. Performance : APD(Average Packet Drop), ART (Average Response Time)
+%2. Cost : MC + DC
+%3. Reputation
+%4. Utility
