@@ -23,3 +23,19 @@ U(j) = r(j) * (Ralloc(k) / Rmax(k))
 
 % Bid
 B = max(U(j) - MC(i, j) - DC(j))
+
+%Least Joint is ours
+
+%Least Cost:
+min(MC(j) + DC(j))
+% No GENI requirements
+
+%Least Latency
+% Greedy approach
+
+%Least vulnerability
+% Choosing VM with best reputation
+
+%Random
+% Picking any VM at random
+% Already done
