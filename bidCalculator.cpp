@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <limits>
 #include <random>
+#include <time.h>
 
 bool first = true;
 
@@ -55,7 +56,7 @@ int main() {
   
   std::vector<double> bidArray;
   double B_bid = std::numeric_limits<double>::min();
-
+  
   //Compute Ralloc value for the application k. We only need one application
   // double C_compute_k = randomize(0, 0.5); // 1 - 0.65 {i.e, 65% CPU is being used}
   // double N_network_k = randomize(0, 0.5); // 1 - 0.50 {i.e, 50% bandwidth being used}
@@ -65,9 +66,11 @@ int main() {
   double C_max_k = randomize(0.5, 1);
   double N_max_k = randomize(0.5, 1);
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
-  double C_compute_j[10];
-  double N_network_j[10];
-  
+  double C_compute_j[10]; 
+  double N_network_j[10]; 
+  double greedy=0;
+  int greedy_index;
+  double r_reputation_j[10];
   for (unsigned int j = 0; j < vmArray.size(); ++j) {
     
     // BEGIN: Deployment Cost calculation
@@ -75,6 +78,14 @@ int main() {
     C_compute_j[j] = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
     N_network_j[j] = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j[j], N_network_j[j]);
+    double r_reputation_j[10];
+//calculating the best R value for further use of greedy approach.
+    if (greedy<Ravail_j)
+    {
+	greedy = Ravail_j;
+        greedy_index=j;
+    }
+    	
     double Rmax_j = 1;
     double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
@@ -89,32 +100,73 @@ int main() {
     // END: Migration Cost calculation
 
     // BEGIN: Utility calculation
-    double r_reputation_j = randomize(0, 1);
+    r_reputation_j[j] = randomize(0, 1);
     double Ralloc_k_j = assignRalloc_k(Ravail_j, Rmax_k);
-    double U_utility_j = r_reputation_j * (Ralloc_k_j / Rmax_k);
+    double U_utility_j = r_reputation_j[j] * (Ralloc_k_j / Rmax_k);
     // END: Utility calculation
 
     // BEGIN: Bid calculation
     bidArray.push_back(U_utility_j - MC_migrationCost_ij - DC_deploymentCost_j);
     // END: Bid calculation
   }
-
+  //calculate maximum reputation to choose VM in accordance to the reputation.
+  double max_reputation = 0;
+  int reputation_index;  
+  for (unsigned int j=0 ; j<vmArray.size() ; ++j)
+  {
+	if (max_reputation < r_reputation_j[j])
+	{
+		max_reputation = r_reputation_j[j];
+		reputation_index = j;
+	}
+  }
   // BEGIN: Bid selection
   // Find the max Bid value and its corresponding array index
   auto bidIterator = std::max_element(std::begin(bidArray), std::end(bidArray));
   B_bid = *bidIterator;
   bestIndex = std::distance(std::begin(bidArray), bidIterator);
   // END: Bid selection
-
+  //print all the VMs' metrics with their respective ID
+  for (unsigned int i = 0; i < vmArray.size(); ++i)
+  {
+  	std::cout << "The details for VM#" << i << std::endl;
+	std::cout << "Computation: " << C_compute_j[i] << std::endl;
+        std::cout << "Network: " << N_network_j[i] << std::endl;
+        std::cout << "Reputation: " << r_reputation_j[i] << std::endl;
+	std::cout << "----------------------------------" << std::endl;
+  }  
   // Print the best VM's ID and Bid value
+  std::cout << "The calculations as of our algorithm." << "\n" << std::endl;
   std::cout << "The best VM is VM#" << vmArray[bestIndex] << " with Bid value = " << B_bid << std::endl;
   std::cout << std::endl;
   std::cout << "********" << std::endl;
   std::cout << "Extra stats: " << std::endl;
-  // std::cout << "Ralloc_k_j = " << Ralloc_k_j << std::endl;
+  std::cout << "Applicable Computation value of the best VM is " << C_compute_j[bestIndex] <<std::endl;
+  std::cout << "Applicable Network value of the best VM is " << N_network_j[bestIndex] <<std::endl;
+// std::cout << "Ralloc_k_j = " << Ralloc_k_j << std::endl;
   // std::cout << "(" << C_compute_k << ", " << N_network_k << ")" << std::endl;
-  std::cout << "Ideal VM Computation value: " << C_compute_j[bestIndex] << std::endl;
-  std::cout << "Ideal VM Network value: " << N_network_j[bestIndex] << std::endl;
   std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
-  std::cout << "(" << C_max_k << ", " << N_max_k << ")" << std::endl;
+  std::cout << "(" << C_max_k << ", " << N_max_k << ")" << "\n\n" << std::endl;
+
+  std::cout << "**************************************************************************" << std::endl;
+  std::cout << "Greedy approach" << std::endl;
+  std::cout << "The best VM is VM# " << greedy_index << " with the Resource value of " << greedy << "\n\n" << std::endl;
+  std::cout << "the computation value for this VM is: " <<C_compute_j[greedy_index] <<"." << std::endl;
+  std::cout << "the network value for this VM is: " <<N_network_j[greedy_index] <<"." << std::endl;
+  std::cout << "the reputation for this VM is: " <<r_reputation_j[greedy_index] <<"." << std::endl;
+
+  std::cout << "**************************************************************************" << std::endl;
+  std::cout << "Based on the reputation" << std::endl;
+  std::cout << "The best VM is VM# " << reputation_index << " with the Reputation value of " << max_reputation << std::endl;
+  std::cout << "the computation value for this VM is: " <<C_compute_j[reputation_index] <<"." << std::endl;
+  std::cout << "the network value for this VM is: " <<N_network_j[reputation_index] <<"." << std::endl;
+  std::cout << "the reputation for this VM is: " <<r_reputation_j[reputation_index] <<"." << std::endl;
+
+  std::cout << "**************************************************************************" << std::endl;
+  srand (time(NULL));
+  int index = rand() % 10 + 1;
+  std::cout << "The randomly selected VM is VM#" << index << std::endl;
+  std::cout << "the computation value for this VM is: " <<C_compute_j[index] <<"." << std::endl;
+  std::cout << "the network value for this VM is: " <<N_network_j[index] <<"." << std::endl;
+  std::cout << "the reputation for this VM is: " <<r_reputation_j[index] <<"." << std::endl; 
 }
