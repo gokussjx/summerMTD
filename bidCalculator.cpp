@@ -68,11 +68,11 @@ int main() {
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
   double C_compute_j[10]; 
   double N_network_j[10];
-  double U_utility_j[10]
+  double U_utility_j[10];
   double greedy = 0;
   int greedy_index;
   double r_reputation_j[10];
-  double leastCost = std::numeric_limits<double>::max();
+  double leastCost_j = std::numeric_limits<double>::max();
   int leastCostVMIndex;
   
   for (unsigned int j = 0; j < vmArray.size(); ++j) {
@@ -154,7 +154,7 @@ int main() {
   std::cout << "********" << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[bestIndex] << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[bestIndex] << std::endl;
-  std::cout << "The reputation for this VM is: " << r_reputation_j[bestIndex] << "." << std::endl
+  std::cout << "The reputation for this VM is: " << r_reputation_j[bestIndex] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[bestIndex] << std::endl;
   std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
   std::cout << "(" << C_max_k << ", " << N_max_k << ")" << "\n\n" << std::endl;
