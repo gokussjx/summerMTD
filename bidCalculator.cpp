@@ -146,8 +146,8 @@ int main() {
     std::cout << "Computation: " << C_compute_j[i] << std::endl;
     std::cout << "Network: " << N_network_j[i] << std::endl;
     std::cout << "Reputation: " << r_reputation_j[i] << std::endl;
-    std::cout << "Utility: " << U_utility_j[j] << std::endl;
-    std::cout << "Cost: " << netCostArray[j] << std::endl; 
+    std::cout << "Utility: " << U_utility_j[i] << std::endl;
+    std::cout << "Cost: " << netCostArray[i] << std::endl; 
     std::cout << "----------------------------------" << std::endl;
   }  
   
