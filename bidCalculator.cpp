@@ -74,6 +74,7 @@ int main() {
   double r_reputation_j[10];
   double leastCost_j = std::numeric_limits<double>::max();
   int leastCostVMIndex;
+  double netCostArray[10];
   
   for (unsigned int j = 0; j < vmArray.size(); ++j) {
     
@@ -105,6 +106,7 @@ int main() {
 
     // Least Cost Scheme
     double netCost_j = DC_deploymentCost_j + MC_migrationCost_ij;
+    netCostArray[j] = netCost_j;
     if (netCost_j < leastCost_j) {
       leastCost_j = netCost_j;
       leastCostVMIndex = j;
@@ -144,6 +146,8 @@ int main() {
     std::cout << "Computation: " << C_compute_j[i] << std::endl;
     std::cout << "Network: " << N_network_j[i] << std::endl;
     std::cout << "Reputation: " << r_reputation_j[i] << std::endl;
+    std::cout << "Utility: " << U_utility_j[j] << std::endl;
+    std::cout << "Cost: " << netCostArray[j] << std::endl; 
     std::cout << "----------------------------------" << std::endl;
   }  
   
@@ -156,6 +160,7 @@ int main() {
   std::cout << "The network value for this VM is: " << N_network_j[bestIndex] << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[bestIndex] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[bestIndex] << std::endl;
+  std::cout << "The cost for this VM is: " << netCostArray[bestIndex] << std::endl;
   std::cout << "Rmax_k(Cmax, Nmax) = " << Rmax_k;
   std::cout << "(" << C_max_k << ", " << N_max_k << ")" << "\n\n" << std::endl;
 
@@ -166,6 +171,7 @@ int main() {
   std::cout << "The network value for this VM is: " << N_network_j[greedy_index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[greedy_index] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[greedy_index] << std::endl;
+  std::cout << "The cost for this VM is: " << netCostArray[greedy_index] << std::endl;
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "LEAST VULNERABILITY (Reputation approach)" << std::endl;
@@ -174,6 +180,7 @@ int main() {
   std::cout << "The network value for this VM is: " << N_network_j[reputation_index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[reputation_index] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[reputation_index] << std::endl;
+  std::cout << "The cost for this VM is: " << netCostArray[reputation_index] << std::endl;
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "LEAST COST (MC+DC approach)" << std::endl;
@@ -182,6 +189,7 @@ int main() {
   std::cout << "The network value for this VM is: " << N_network_j[leastCostVMIndex] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[leastCostVMIndex] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[leastCostVMIndex] << std::endl;
+  std::cout << "The cost for this VM is: " << netCostArray[leastCostVMIndex] << std::endl;
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "RANDOM APPROACH" << std::endl;
@@ -192,4 +200,5 @@ int main() {
   std::cout << "The network value for this VM is: " << N_network_j[index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[index] << "." << std::endl;
   std::cout << "The utility value for this VM is: " << U_utility_j[index] << std::endl;
+  std::cout << "The cost for this VM is: " << netCostArray[index] << std::endl;
 }
