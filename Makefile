@@ -13,7 +13,7 @@ all: $(TARGET).cpp
 			$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).cpp
 
 run: $(TARGET)
-			./$(TARGET)
+			./$(TARGET) ${vmcount}
 
 clean:
 			$(RM) $(TARGET)

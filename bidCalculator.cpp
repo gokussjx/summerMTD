@@ -32,6 +32,13 @@ double randomize(double a, double b) {
   return dis(gen);
 }
 
+int randomizeInt(int VMCOUNT) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dis(0, VMCOUNT-1);
+  return dis(gen);
+}
+
 double assignRalloc_k(double Ravail_j, double Rmax_k) {
   double Rmin_k = randomize(0, 0.5);
   //double Rmax_k = randomize(0.5, 1);
@@ -46,10 +53,23 @@ double assignRalloc_k(double Ravail_j, double Rmax_k) {
   return Ralloc_k_j;
 }
 
-int main() {
+int main(int argc, char** argv) {
 
-  std::vector<int> vmArray{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};    // Holds the ID of every VM
+  if (argc != 2) {
+    std::cout << "Invalid no. of arguments." << std::endl;
+    std::cout << "Usage: make run vmcount=\"<no. of VMs>\"" << std::endl;
+    exit(0);
+  }
+
+  int VMCOUNT = std::stoi(argv[1]);
+  #define VMCOUNT_MACRO VMCOUNT
+
+  std::vector<int> vmArray;    // Holds the ID of every VM
   int bestIndex;                                              // Index of best VM in vmArray
+
+  for(int i = 0; i < VMCOUNT; ++i) {
+    vmArray.push_back(i);
+  }
 
   // SC_snapshotCost_i = timeAtIdeal / timeAtSource;
   double SC_snapshotCost_i = randomize(0, 1);
@@ -66,15 +86,15 @@ int main() {
   double C_max_k = randomize(0.5, 1);
   double N_max_k = randomize(0.5, 1);
   double Rmax_k = rootMeanSquare(C_max_k, N_max_k);
-  double C_compute_j[10]; 
-  double N_network_j[10];
-  double U_utility_j[10];
+  double C_compute_j[VMCOUNT]; 
+  double N_network_j[VMCOUNT];
+  double U_utility_j[VMCOUNT];
   double greedy = 0;
   int greedy_index;
-  double r_reputation_j[10];
+  double r_reputation_j[VMCOUNT];
   double leastCost_j = std::numeric_limits<double>::max();
   int leastCostVMIndex;
-  double netCostArray[10];
+  double netCostArray[VMCOUNT];
   
   for (unsigned int j = 0; j < vmArray.size(); ++j) {
     
@@ -83,7 +103,7 @@ int main() {
     C_compute_j[j] = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
     N_network_j[j] = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j[j], N_network_j[j]);
-    double r_reputation_j[10];
+    double r_reputation_j[VMCOUNT];
     double Rmax_j = 1;
     double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
@@ -142,6 +162,7 @@ int main() {
   
   //print all the VMs' metrics with their respective ID
   for (unsigned int i = 0; i < vmArray.size(); ++i) {
+    std::cout << "----------------------------------" << std::endl;
     std::cout << "The details for VM#" << i << std::endl;
     std::cout << "Computation: " << C_compute_j[i] << std::endl;
     std::cout << "Network: " << N_network_j[i] << std::endl;
@@ -193,8 +214,7 @@ int main() {
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "RANDOM APPROACH" << std::endl;
-  srand (time(NULL));
-  int index = rand() % 10 + 1;
+  int index = randomizeInt(VMCOUNT_MACRO);
   std::cout << "The randomly selected VM is VM#" << index << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[index] << "." << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[index] << "." << std::endl;
