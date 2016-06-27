@@ -17,9 +17,9 @@ To build from source, ensure that you meet the following requirements:
   $ make all
   ```
 
-2. Run:
+2. Run (eg: Assuming 15 VMs):
   ```
-  $ make run
+  $ make run vmcount=15
   ```
 
 ### Cleanup
