@@ -19,9 +19,9 @@ double rootMeanSquare(double a, double b) {
 double randomize(double a, double b) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_real_distribution<> dis(a, b + 0.00001);
+  std::uniform_real_distribution<double> dis(a, b + 0.00001);
 
-  auto temp = dis(gen);
+  double temp = dis(gen);
   if (first == true) {
     first = false;
     if (temp == a) temp = randomize(a, b);  // We're reducing probability of 'a'
@@ -103,7 +103,6 @@ int main(int argc, char** argv) {
     C_compute_j[j] = randomize(0, 1); // 1 - 0.65 {i.e, 65% CPU is being used}
     N_network_j[j] = randomize(0, 1); // 1 - 0.50 {i.e, 50% bandwidth being used}
     double Ravail_j = rootMeanSquare(C_compute_j[j], N_network_j[j]);
-    double r_reputation_j[VMCOUNT];
     double Rmax_j = 1;
     double DC_deploymentCost_j = Ravail_j / Rmax_j;
     // END: Deployment Cost calculation
