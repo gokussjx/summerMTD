@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
   //print all the VMs' metrics with their respective ID
   for (unsigned int i = 0; i < vmArray.size(); ++i) {
     std::cout << "----------------------------------" << std::endl;
-    std::cout << "The details for VM#" << i << std::endl;
+    std::cout << "The details for VM#" << vmArray[i] << std::endl;
     std::cout << "Computation: " << C_compute_j[i] << std::endl;
     std::cout << "Network: " << N_network_j[i] << std::endl;
     std::cout << "Reputation: " << r_reputation_j[i] << std::endl;
@@ -186,7 +186,7 @@ int main(int argc, char** argv) {
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "LEAST LATENCY (Greedy approach)" << std::endl;
-  std::cout << "The best VM is VM# " << greedy_index << " with the Resource value of " << greedy << "\n\n" << std::endl;
+  std::cout << "The best VM is VM# " << vmArray[greedy_index] << " with the Resource value of " << greedy << "\n\n" << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[greedy_index] << "." << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[greedy_index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[greedy_index] << "." << std::endl;
@@ -195,7 +195,7 @@ int main(int argc, char** argv) {
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "LEAST VULNERABILITY (Reputation approach)" << std::endl;
-  std::cout << "The best VM is VM# " << reputation_index << " with the Reputation value of " << max_reputation << std::endl;
+  std::cout << "The best VM is VM# " << vmArray[reputation_index] << " with the Reputation value of " << max_reputation << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[reputation_index] << "." << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[reputation_index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[reputation_index] << "." << std::endl;
@@ -204,7 +204,7 @@ int main(int argc, char** argv) {
 
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "LEAST COST (MC+DC approach)" << std::endl;
-  std::cout << "The best VM is VM# " << leastCostVMIndex << " with the Cost value of " << leastCost_j << std::endl;
+  std::cout << "The best VM is VM# " << vmArray[leastCostVMIndex] << " with the Cost value of " << leastCost_j << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[leastCostVMIndex] << "." << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[leastCostVMIndex] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[leastCostVMIndex] << "." << std::endl;
@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
   std::cout << "**************************************************************************" << std::endl;
   std::cout << "RANDOM APPROACH" << std::endl;
   int index = randomizeInt(VMCOUNT_MACRO);
-  std::cout << "The randomly selected VM is VM#" << index << std::endl;
+  std::cout << "The randomly selected VM is VM#" << vmArray[index] << std::endl;
   std::cout << "The computation value for this VM is: " << C_compute_j[index] << "." << std::endl;
   std::cout << "The network value for this VM is: " << N_network_j[index] << "." << std::endl;
   std::cout << "The reputation for this VM is: " << r_reputation_j[index] << "." << std::endl;
